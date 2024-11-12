@@ -18,6 +18,10 @@ Register a new API or update an existing API.
 - Create API with custom properties
     ```bash
         apic api create -g contoso-resources -n contoso --api-id echo-api --title "Echo API" --type REST --custom-properties '{\"public-facing\":true}'
+    ```
+
+- Create API with custom properties using json file
+    ```bash
         apic api create -g contoso-resources -n contoso --api-id echo-api --title "Echo API" --type REST --custom-properties '@customProperties.json'
     ```
 
