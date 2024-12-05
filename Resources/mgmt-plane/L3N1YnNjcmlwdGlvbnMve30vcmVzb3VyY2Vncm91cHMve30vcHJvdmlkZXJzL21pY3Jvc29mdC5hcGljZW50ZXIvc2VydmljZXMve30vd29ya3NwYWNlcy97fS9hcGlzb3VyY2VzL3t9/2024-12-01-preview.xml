@@ -2,7 +2,7 @@
 <CodeGen plane="mgmt-plane">
   <resource id="/subscriptions/{}/resourcegroups/{}/providers/microsoft.apicenter/services/{}/workspaces/{}/apisources/{}" version="2024-12-01-preview" swagger="mgmt-plane/apicenter/ResourceProviders/Microsoft.ApiCenter/Paths/L3N1YnNjcmlwdGlvbnMve3N1YnNjcmlwdGlvbklkfS9yZXNvdXJjZUdyb3Vwcy97cmVzb3VyY2VHcm91cE5hbWV9L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpQ2VudGVyL3NlcnZpY2VzL3tzZXJ2aWNlTmFtZX0vd29ya3NwYWNlcy97d29ya3NwYWNlTmFtZX0vYXBpU291cmNlcy97YXBpU291cmNlTmFtZX0=/V/MjAyNC0xMi0wMS1wcmV2aWV3"/>
   <commandGroup name="apic integration">
-    <command name="show" version="2024-12-01-preview">
+    <command name="create" version="2024-12-01-preview" confirmation="">
       <resource id="/subscriptions/{}/resourcegroups/{}/providers/microsoft.apicenter/services/{}/workspaces/{}/apisources/{}" version="2024-12-01-preview" swagger="mgmt-plane/apicenter/ResourceProviders/Microsoft.ApiCenter/Paths/L3N1YnNjcmlwdGlvbnMve3N1YnNjcmlwdGlvbklkfS9yZXNvdXJjZUdyb3Vwcy97cmVzb3VyY2VHcm91cE5hbWV9L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpQ2VudGVyL3NlcnZpY2VzL3tzZXJ2aWNlTmFtZX0vd29ya3NwYWNlcy97d29ya3NwYWNlTmFtZX0vYXBpU291cmNlcy97YXBpU291cmNlTmFtZX0=/V/MjAyNC0xMi0wMS1wcmV2aWV3"/>
       <argGroup name="">
         <arg type="string" var="$Path.apiSourceName" options="integration-id" required="True" group="" idPart="child_name_2">
@@ -20,9 +20,66 @@
           <format pattern="^[a-zA-Z0-9-]{3,90}$" maxLength="90" minLength="1"/>
         </arg>
       </argGroup>
-      <operation operationId="ApiSources_Get">
+      <argGroup name="Properties">
+        <arg type="object" var="$resource.properties.amazonApiGatewaySource" options="amazon-api-gateway-source" group="Properties">
+          <help short="API source configuration for Amazon API Gateway."/>
+          <arg type="string" var="$resource.properties.amazonApiGatewaySource.accessKey" options="access-key" required="True">
+            <help short="Amazon API Gateway Access Key. Must be an Azure Key Vault secret reference."/>
+          </arg>
+          <arg type="ResourceId" var="$resource.properties.amazonApiGatewaySource.msiResourceId" options="msi-resource-id">
+            <help short="(Optional) The resource ID of the managed identity that has access to the Azure Key Vault secrets."/>
+          </arg>
+          <arg type="string" var="$resource.properties.amazonApiGatewaySource.regionName" options="region-name" required="True">
+            <help short="Amazon API Gateway Region (ex. us-east-2)."/>
+          </arg>
+          <arg type="string" var="$resource.properties.amazonApiGatewaySource.secretAccessKey" options="secret-access-key" required="True">
+            <help short="Amazon API Gateway Secret Access Key. Must be an Azure Key Vault secret reference."/>
+          </arg>
+        </arg>
+        <arg type="string" var="$resource.properties.apiSourceType" options="api-source-type" group="Properties">
+          <help short="API source type"/>
+          <enum>
+            <item name="AmazonApiGateway" value="&quot;AmazonApiGateway&quot;"/>
+            <item name="AzureApiManagement" value="&quot;AzureApiManagement&quot;"/>
+          </enum>
+        </arg>
+        <arg type="object" var="$resource.properties.azureApiManagementSource" options="azure-api-management-source" group="Properties">
+          <help short="API source configuration for Azure API Management."/>
+          <arg type="ResourceId" var="$resource.properties.azureApiManagementSource.msiResourceId" options="msi-resource-id">
+            <help short="(Optional) The resource ID of the managed identity that has access to the API Management instance."/>
+          </arg>
+          <arg type="ResourceId" var="$resource.properties.azureApiManagementSource.resourceId" options="resource-id" required="True">
+            <help short="API Management service resource ID."/>
+          </arg>
+        </arg>
+        <arg type="string" var="$resource.properties.importSpecification" options="import-specification" group="Properties">
+          <help short="Indicates if the specification should be imported along with metadata."/>
+          <default value="&quot;always&quot;"/>
+          <enum>
+            <item name="always" value="&quot;always&quot;"/>
+            <item name="never" value="&quot;never&quot;"/>
+            <item name="ondemand" value="&quot;ondemand&quot;"/>
+          </enum>
+        </arg>
+        <arg type="ResourceId" var="$resource.properties.targetEnvironmentId" options="target-environment-id" group="Properties">
+          <help short="The target environment resource ID."/>
+        </arg>
+        <arg type="string" var="$resource.properties.targetLifecycleStage" options="target-lifecycle-stage" group="Properties">
+          <help short="The target lifecycle stage."/>
+          <enum>
+            <item name="deprecated" value="&quot;deprecated&quot;"/>
+            <item name="design" value="&quot;design&quot;"/>
+            <item name="development" value="&quot;development&quot;"/>
+            <item name="preview" value="&quot;preview&quot;"/>
+            <item name="production" value="&quot;production&quot;"/>
+            <item name="retired" value="&quot;retired&quot;"/>
+            <item name="testing" value="&quot;testing&quot;"/>
+          </enum>
+        </arg>
+      </argGroup>
+      <operation operationId="ApiSources_CreateOrUpdate">
         <http path="/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apiSources/{apiSourceName}">
-          <request method="get">
+          <request method="put">
             <path>
               <param type="string" name="apiSourceName" arg="$Path.apiSourceName" required="True">
                 <format pattern="^[a-zA-Z0-9-]{3,90}$" maxLength="90" minLength="1"/>
@@ -44,8 +101,52 @@
                 <format minLength="1"/>
               </const>
             </query>
+            <body>
+              <json>
+                <schema type="object" name="resource" required="True" clientFlatten="True">
+                  <prop type="object" name="properties" clientFlatten="True">
+                    <prop type="object" name="amazonApiGatewaySource" arg="$resource.properties.amazonApiGatewaySource">
+                      <prop type="string" name="accessKey" arg="$resource.properties.amazonApiGatewaySource.accessKey" required="True"/>
+                      <prop type="ResourceId" name="msiResourceId" arg="$resource.properties.amazonApiGatewaySource.msiResourceId"/>
+                      <prop type="string" name="regionName" arg="$resource.properties.amazonApiGatewaySource.regionName" required="True"/>
+                      <prop type="string" name="secretAccessKey" arg="$resource.properties.amazonApiGatewaySource.secretAccessKey" required="True"/>
+                    </prop>
+                    <prop type="string" name="apiSourceType" arg="$resource.properties.apiSourceType" required="True">
+                      <enum>
+                        <item value="&quot;AmazonApiGateway&quot;"/>
+                        <item value="&quot;AzureApiManagement&quot;"/>
+                      </enum>
+                    </prop>
+                    <prop type="object" name="azureApiManagementSource" arg="$resource.properties.azureApiManagementSource">
+                      <prop type="ResourceId" name="msiResourceId" arg="$resource.properties.azureApiManagementSource.msiResourceId"/>
+                      <prop type="ResourceId" name="resourceId" arg="$resource.properties.azureApiManagementSource.resourceId" required="True"/>
+                    </prop>
+                    <prop type="string" name="importSpecification" arg="$resource.properties.importSpecification">
+                      <default value="&quot;ondemand&quot;"/>
+                      <enum>
+                        <item value="&quot;always&quot;"/>
+                        <item value="&quot;never&quot;"/>
+                        <item value="&quot;ondemand&quot;"/>
+                      </enum>
+                    </prop>
+                    <prop type="ResourceId" name="targetEnvironmentId" arg="$resource.properties.targetEnvironmentId"/>
+                    <prop type="string" name="targetLifecycleStage" arg="$resource.properties.targetLifecycleStage">
+                      <enum>
+                        <item value="&quot;deprecated&quot;"/>
+                        <item value="&quot;design&quot;"/>
+                        <item value="&quot;development&quot;"/>
+                        <item value="&quot;preview&quot;"/>
+                        <item value="&quot;production&quot;"/>
+                        <item value="&quot;retired&quot;"/>
+                        <item value="&quot;testing&quot;"/>
+                      </enum>
+                    </prop>
+                  </prop>
+                </schema>
+              </json>
+            </body>
           </request>
-          <response statusCode="200">
+          <response statusCode="200 201">
             <header>
               <item name="ETag"/>
             </header>
@@ -199,7 +300,7 @@
         </http>
       </operation>
     </command>
-    <command name="create" version="2024-12-01-preview">
+    <command name="show" version="2024-12-01-preview" confirmation="">
       <resource id="/subscriptions/{}/resourcegroups/{}/providers/microsoft.apicenter/services/{}/workspaces/{}/apisources/{}" version="2024-12-01-preview" swagger="mgmt-plane/apicenter/ResourceProviders/Microsoft.ApiCenter/Paths/L3N1YnNjcmlwdGlvbnMve3N1YnNjcmlwdGlvbklkfS9yZXNvdXJjZUdyb3Vwcy97cmVzb3VyY2VHcm91cE5hbWV9L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpQ2VudGVyL3NlcnZpY2VzL3tzZXJ2aWNlTmFtZX0vd29ya3NwYWNlcy97d29ya3NwYWNlTmFtZX0vYXBpU291cmNlcy97YXBpU291cmNlTmFtZX0=/V/MjAyNC0xMi0wMS1wcmV2aWV3"/>
       <argGroup name="">
         <arg type="string" var="$Path.apiSourceName" options="integration-id" required="True" group="" idPart="child_name_2">
@@ -217,65 +318,9 @@
           <format pattern="^[a-zA-Z0-9-]{3,90}$" maxLength="90" minLength="1"/>
         </arg>
       </argGroup>
-      <argGroup name="AzureApiManagementSource">
-        <arg type="ResourceId" var="$resource.properties.azureApiManagementSource.msiResourceId" options="msi-resource-id" group="AzureApiManagementSource">
-          <help short="The resource ID of the managed identity that has access to the API Management instance."/>
-        </arg>
-        <arg type="ResourceId" var="$resource.properties.azureApiManagementSource.resourceId" options="apim-resource-id" group="AzureApiManagementSource">
-          <help short="API Management service resource ID."/>
-        </arg>
-      </argGroup>
-      <argGroup name="Properties">
-        <arg type="object" var="$resource.properties.amazonApiGatewaySource" options="amazon-api-gateway-source" group="Properties">
-          <help short="API source configuration for Amazon API Gateway."/>
-          <arg type="string" var="$resource.properties.amazonApiGatewaySource.accessKey" options="access-key" required="True">
-            <help short="Amazon API Gateway Access Key. Must be an Azure Key Vault secret reference."/>
-          </arg>
-          <arg type="ResourceId" var="$resource.properties.amazonApiGatewaySource.msiResourceId" options="msi-resource-id">
-            <help short="(Optional) The resource ID of the managed identity that has access to the Azure Key Vault secrets."/>
-          </arg>
-          <arg type="string" var="$resource.properties.amazonApiGatewaySource.regionName" options="region-name" required="True">
-            <help short="Amazon API Gateway Region (ex. us-east-2)."/>
-          </arg>
-          <arg type="string" var="$resource.properties.amazonApiGatewaySource.secretAccessKey" options="secret-access-key" required="True">
-            <help short="Amazon API Gateway Secret Access Key. Must be an Azure Key Vault secret reference."/>
-          </arg>
-        </arg>
-        <arg type="string" var="$resource.properties.apiSourceType" options="api-source-type" group="Properties">
-          <help short="API source type"/>
-          <enum>
-            <item name="AmazonApiGateway" value="&quot;AmazonApiGateway&quot;"/>
-            <item name="AzureApiManagement" value="&quot;AzureApiManagement&quot;"/>
-          </enum>
-        </arg>
-        <arg type="string" var="$resource.properties.importSpecification" options="import-specification" group="Properties">
-          <help short="Indicates if the specification should be imported along with metadata."/>
-          <default value="&quot;always&quot;"/>
-          <enum>
-            <item name="always" value="&quot;always&quot;"/>
-            <item name="never" value="&quot;never&quot;"/>
-            <item name="ondemand" value="&quot;ondemand&quot;"/>
-          </enum>
-        </arg>
-        <arg type="ResourceId" var="$resource.properties.targetEnvironmentId" options="target-environment-id" group="Properties">
-          <help short="The target environment resource ID."/>
-        </arg>
-        <arg type="string" var="$resource.properties.targetLifecycleStage" options="target-lifecycle-stage" group="Properties">
-          <help short="The target lifecycle stage."/>
-          <enum>
-            <item name="deprecated" value="&quot;deprecated&quot;"/>
-            <item name="design" value="&quot;design&quot;"/>
-            <item name="development" value="&quot;development&quot;"/>
-            <item name="preview" value="&quot;preview&quot;"/>
-            <item name="production" value="&quot;production&quot;"/>
-            <item name="retired" value="&quot;retired&quot;"/>
-            <item name="testing" value="&quot;testing&quot;"/>
-          </enum>
-        </arg>
-      </argGroup>
-      <operation operationId="ApiSources_CreateOrUpdate">
+      <operation operationId="ApiSources_Get">
         <http path="/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apiSources/{apiSourceName}">
-          <request method="put">
+          <request method="get">
             <path>
               <param type="string" name="apiSourceName" arg="$Path.apiSourceName" required="True">
                 <format pattern="^[a-zA-Z0-9-]{3,90}$" maxLength="90" minLength="1"/>
@@ -297,52 +342,8 @@
                 <format minLength="1"/>
               </const>
             </query>
-            <body>
-              <json>
-                <schema type="object" name="resource" required="True" clientFlatten="True">
-                  <prop type="object" name="properties" clientFlatten="True">
-                    <prop type="object" name="amazonApiGatewaySource" arg="$resource.properties.amazonApiGatewaySource">
-                      <prop type="string" name="accessKey" arg="$resource.properties.amazonApiGatewaySource.accessKey" required="True"/>
-                      <prop type="ResourceId" name="msiResourceId" arg="$resource.properties.amazonApiGatewaySource.msiResourceId"/>
-                      <prop type="string" name="regionName" arg="$resource.properties.amazonApiGatewaySource.regionName" required="True"/>
-                      <prop type="string" name="secretAccessKey" arg="$resource.properties.amazonApiGatewaySource.secretAccessKey" required="True"/>
-                    </prop>
-                    <prop type="string" name="apiSourceType" arg="$resource.properties.apiSourceType" required="True">
-                      <enum>
-                        <item value="&quot;AmazonApiGateway&quot;"/>
-                        <item value="&quot;AzureApiManagement&quot;"/>
-                      </enum>
-                    </prop>
-                    <prop type="object" name="azureApiManagementSource">
-                      <prop type="ResourceId" name="msiResourceId" arg="$resource.properties.azureApiManagementSource.msiResourceId"/>
-                      <prop type="ResourceId" name="resourceId" arg="$resource.properties.azureApiManagementSource.resourceId" required="True"/>
-                    </prop>
-                    <prop type="string" name="importSpecification" arg="$resource.properties.importSpecification">
-                      <default value="&quot;ondemand&quot;"/>
-                      <enum>
-                        <item value="&quot;always&quot;"/>
-                        <item value="&quot;never&quot;"/>
-                        <item value="&quot;ondemand&quot;"/>
-                      </enum>
-                    </prop>
-                    <prop type="ResourceId" name="targetEnvironmentId" arg="$resource.properties.targetEnvironmentId"/>
-                    <prop type="string" name="targetLifecycleStage" arg="$resource.properties.targetLifecycleStage">
-                      <enum>
-                        <item value="&quot;deprecated&quot;"/>
-                        <item value="&quot;design&quot;"/>
-                        <item value="&quot;development&quot;"/>
-                        <item value="&quot;preview&quot;"/>
-                        <item value="&quot;production&quot;"/>
-                        <item value="&quot;retired&quot;"/>
-                        <item value="&quot;testing&quot;"/>
-                      </enum>
-                    </prop>
-                  </prop>
-                </schema>
-              </json>
-            </body>
           </request>
-          <response statusCode="200 201">
+          <response statusCode="200">
             <header>
               <item name="ETag"/>
             </header>
@@ -441,7 +442,7 @@
       </operation>
       <output type="object" ref="$Instance" clientFlatten="True"/>
     </command>
-    <command name="head" version="2024-12-01-preview">
+    <command name="head" version="2024-12-01-preview" confirmation="">
       <resource id="/subscriptions/{}/resourcegroups/{}/providers/microsoft.apicenter/services/{}/workspaces/{}/apisources/{}" version="2024-12-01-preview" swagger="mgmt-plane/apicenter/ResourceProviders/Microsoft.ApiCenter/Paths/L3N1YnNjcmlwdGlvbnMve3N1YnNjcmlwdGlvbklkfS9yZXNvdXJjZUdyb3Vwcy97cmVzb3VyY2VHcm91cE5hbWV9L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpQ2VudGVyL3NlcnZpY2VzL3tzZXJ2aWNlTmFtZX0vd29ya3NwYWNlcy97d29ya3NwYWNlTmFtZX0vYXBpU291cmNlcy97YXBpU291cmNlTmFtZX0=/V/MjAyNC0xMi0wMS1wcmV2aWV3"/>
       <argGroup name="">
         <arg type="string" var="$Path.apiSourceName" options="integration-id" required="True" group="" idPart="child_name_2">
@@ -495,7 +496,7 @@
         </http>
       </operation>
     </command>
-    <command name="update" version="2024-12-01-preview">
+    <command name="update" version="2024-12-01-preview" confirmation="">
       <resource id="/subscriptions/{}/resourcegroups/{}/providers/microsoft.apicenter/services/{}/workspaces/{}/apisources/{}" version="2024-12-01-preview" swagger="mgmt-plane/apicenter/ResourceProviders/Microsoft.ApiCenter/Paths/L3N1YnNjcmlwdGlvbnMve3N1YnNjcmlwdGlvbklkfS9yZXNvdXJjZUdyb3Vwcy97cmVzb3VyY2VHcm91cE5hbWV9L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpQ2VudGVyL3NlcnZpY2VzL3tzZXJ2aWNlTmFtZX0vd29ya3NwYWNlcy97d29ya3NwYWNlTmFtZX0vYXBpU291cmNlcy97YXBpU291cmNlTmFtZX0=/V/MjAyNC0xMi0wMS1wcmV2aWV3"/>
       <argGroup name="">
         <arg type="string" var="$Path.apiSourceName" options="integration-id" required="True" group="" idPart="child_name_2">
@@ -511,14 +512,6 @@
         <arg type="string" var="$Path.workspaceName" options="workspace-name" required="True" idPart="child_name_1">
           <help short="The name of the workspace."/>
           <format pattern="^[a-zA-Z0-9-]{3,90}$" maxLength="90" minLength="1"/>
-        </arg>
-      </argGroup>
-      <argGroup name="AzureApiManagementSource">
-        <arg nullable="True" type="ResourceId" var="$resource.properties.azureApiManagementSource.msiResourceId" options="msi-resource-id" group="AzureApiManagementSource">
-          <help short="The resource ID of the managed identity that has access to the API Management instance."/>
-        </arg>
-        <arg type="ResourceId" var="$resource.properties.azureApiManagementSource.resourceId" options="apim-resource-id" group="AzureApiManagementSource">
-          <help short="API Management service resource ID."/>
         </arg>
       </argGroup>
       <argGroup name="Properties">
@@ -543,6 +536,15 @@
             <item name="AmazonApiGateway" value="&quot;AmazonApiGateway&quot;"/>
             <item name="AzureApiManagement" value="&quot;AzureApiManagement&quot;"/>
           </enum>
+        </arg>
+        <arg nullable="True" type="object" var="$resource.properties.azureApiManagementSource" options="azure-api-management-source" group="Properties">
+          <help short="API source configuration for Azure API Management."/>
+          <arg nullable="True" type="ResourceId" var="$resource.properties.azureApiManagementSource.msiResourceId" options="msi-resource-id">
+            <help short="(Optional) The resource ID of the managed identity that has access to the API Management instance."/>
+          </arg>
+          <arg type="ResourceId" var="$resource.properties.azureApiManagementSource.resourceId" options="resource-id">
+            <help short="API Management service resource ID."/>
+          </arg>
         </arg>
         <arg nullable="True" type="string" var="$resource.properties.importSpecification" options="import-specification" group="Properties">
           <help short="Indicates if the specification should be imported along with metadata."/>
@@ -707,7 +709,7 @@
                     <item value="&quot;AzureApiManagement&quot;"/>
                   </enum>
                 </prop>
-                <prop type="object" name="azureApiManagementSource">
+                <prop type="object" name="azureApiManagementSource" arg="$resource.properties.azureApiManagementSource">
                   <prop type="ResourceId" name="msiResourceId" arg="$resource.properties.azureApiManagementSource.msiResourceId"/>
                   <prop type="ResourceId" name="resourceId" arg="$resource.properties.azureApiManagementSource.resourceId" required="True"/>
                 </prop>
