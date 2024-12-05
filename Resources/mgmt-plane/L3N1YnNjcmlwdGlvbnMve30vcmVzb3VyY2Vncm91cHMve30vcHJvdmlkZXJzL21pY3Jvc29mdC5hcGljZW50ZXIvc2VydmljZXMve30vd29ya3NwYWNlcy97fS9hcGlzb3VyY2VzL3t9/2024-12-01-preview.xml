@@ -48,7 +48,7 @@
           <arg type="ResourceId" var="$resource.properties.azureApiManagementSource.msiResourceId" options="msi-resource-id">
             <help short="(Optional) The resource ID of the managed identity that has access to the API Management instance."/>
           </arg>
-          <arg type="ResourceId" var="$resource.properties.azureApiManagementSource.resourceId" options="resource-id" required="True">
+          <arg type="ResourceId" var="$resource.properties.azureApiManagementSource.resourceId" options="apim-resource-id" required="True" group="">
             <help short="API Management service resource ID."/>
           </arg>
         </arg>
