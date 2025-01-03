@@ -16,6 +16,9 @@ Manage Azure API Center service api analysis features
 - [import-ruleset](/Commands/apic/api-analysis/_import-ruleset.md)
 : Imports the API analyzer ruleset.
 
+- [list](/Commands/apic/api-analysis/_list.md)
+: List API analyzer configurations.
+
 - [show](/Commands/apic/api-analysis/_show.md)
 : Get details of the API analyzer configuration.
 
