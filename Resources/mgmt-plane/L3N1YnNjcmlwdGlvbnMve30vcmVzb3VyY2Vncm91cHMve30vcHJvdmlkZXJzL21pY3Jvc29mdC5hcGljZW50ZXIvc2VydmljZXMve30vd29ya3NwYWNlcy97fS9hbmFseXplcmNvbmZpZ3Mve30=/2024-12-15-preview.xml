@@ -10,7 +10,7 @@
           <format pattern="^[a-zA-Z0-9-]{3,90}$" maxLength="90" minLength="1"/>
         </arg>
         <arg type="ResourceGroupName" var="$Path.resourceGroupName" options="resource-group g" required="True" idPart="resource_group"/>
-        <arg type="string" var="$Path.serviceName" options="service-name s" required="True" group="" idPart="name">
+        <arg type="string" var="$Path.serviceName" options="service-name service s" required="True" group="" idPart="name">
           <help short="The name of Azure API Center service."/>
           <format pattern="^[a-zA-Z0-9-]{3,90}$" maxLength="90" minLength="1"/>
         </arg>
@@ -137,7 +137,7 @@
           <format pattern="^[a-zA-Z0-9-]{3,90}$" maxLength="90" minLength="1"/>
         </arg>
         <arg type="ResourceGroupName" var="$Path.resourceGroupName" options="resource-group g" required="True" idPart="resource_group"/>
-        <arg type="string" var="$Path.serviceName" options="service-name s" required="True" group="" idPart="name">
+        <arg type="string" var="$Path.serviceName" options="service-name service s" required="True" group="" idPart="name">
           <help short="The name of Azure API Center service."/>
           <format pattern="^[a-zA-Z0-9-]{3,90}$" maxLength="90" minLength="1"/>
         </arg>
@@ -192,7 +192,7 @@
           <format pattern="^[a-zA-Z0-9-]{3,90}$" maxLength="90" minLength="1"/>
         </arg>
         <arg type="ResourceGroupName" var="$Path.resourceGroupName" options="resource-group g" required="True" idPart="resource_group"/>
-        <arg type="string" var="$Path.serviceName" options="service-name s" required="True" group="" idPart="name">
+        <arg type="string" var="$Path.serviceName" options="service-name service s" required="True" group="" idPart="name">
           <help short="The name of Azure API Center service."/>
           <format pattern="^[a-zA-Z0-9-]{3,90}$" maxLength="90" minLength="1"/>
         </arg>
@@ -298,7 +298,7 @@
           <format pattern="^[a-zA-Z0-9-]{3,90}$" maxLength="90" minLength="1"/>
         </arg>
         <arg type="ResourceGroupName" var="$Path.resourceGroupName" options="resource-group g" required="True" idPart="resource_group"/>
-        <arg type="string" var="$Path.serviceName" options="service-name s" required="True" group="" idPart="name">
+        <arg type="string" var="$Path.serviceName" options="service-name service s" required="True" group="" idPart="name">
           <help short="The name of Azure API Center service."/>
           <format pattern="^[a-zA-Z0-9-]{3,90}$" maxLength="90" minLength="1"/>
         </arg>
