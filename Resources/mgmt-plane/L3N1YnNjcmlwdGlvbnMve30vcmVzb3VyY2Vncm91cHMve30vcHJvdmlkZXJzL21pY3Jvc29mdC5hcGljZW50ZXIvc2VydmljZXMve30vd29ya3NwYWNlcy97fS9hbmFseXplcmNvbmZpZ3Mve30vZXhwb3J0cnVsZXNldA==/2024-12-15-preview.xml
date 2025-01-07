@@ -5,12 +5,12 @@
     <command name="export-ruleset" version="2024-12-15-preview" confirmation="">
       <resource id="/subscriptions/{}/resourcegroups/{}/providers/microsoft.apicenter/services/{}/workspaces/{}/analyzerconfigs/{}/exportruleset" version="2024-12-15-preview" swagger="mgmt-plane/apicenter/ResourceProviders/Microsoft.ApiCenter/Paths/L3N1YnNjcmlwdGlvbnMve3N1YnNjcmlwdGlvbklkfS9yZXNvdXJjZUdyb3Vwcy97cmVzb3VyY2VHcm91cE5hbWV9L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBpQ2VudGVyL3NlcnZpY2VzL3tzZXJ2aWNlTmFtZX0vd29ya3NwYWNlcy97d29ya3NwYWNlTmFtZX0vYW5hbHl6ZXJDb25maWdzL3thbmFseXplckNvbmZpZ05hbWV9L2V4cG9ydFJ1bGVzZXQ=/V/MjAyNC0xMi0xNS1wcmV2aWV3"/>
       <argGroup name="">
-        <arg type="string" var="$Path.analyzerConfigName" options="analyzer-config-name name n" required="True" group="" idPart="child_name_2">
+        <arg type="string" var="$Path.analyzerConfigName" options="analyzer-config-name config-name c" required="True" group="" idPart="child_name_2">
           <help short="The name of the configuration."/>
           <format pattern="^[a-zA-Z0-9-]{3,90}$" maxLength="90" minLength="1"/>
         </arg>
         <arg type="ResourceGroupName" var="$Path.resourceGroupName" options="resource-group g" required="True" idPart="resource_group"/>
-        <arg type="string" var="$Path.serviceName" options="service-name s" required="True" group="" idPart="name">
+        <arg type="string" var="$Path.serviceName" options="service-name n" required="True" group="" idPart="name">
           <help short="The name of Azure API Center service."/>
           <format pattern="^[a-zA-Z0-9-]{3,90}$" maxLength="90" minLength="1"/>
         </arg>

@@ -12,5 +12,5 @@ Get details of the API analyzer configuration.
 
 - Show details of an API Analysis rule config
     ```bash
-        apic api-analysis show -g contoso-resources -s contoso -n spectral-openapi
+        apic api-analysis show -g contoso-resources -n contoso -c spectral-openapi
     ```

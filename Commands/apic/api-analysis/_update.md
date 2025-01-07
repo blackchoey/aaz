@@ -12,5 +12,5 @@ Update new or updates existing API analyzer configuration.
 
 - Update an API Analysis rule config
     ```bash
-        apic api-analysis update -g contoso-resources -s contoso -n spectral-openapi
+        apic api-analysis update -g contoso-resources -n contoso -c spectral-openapi
     ```

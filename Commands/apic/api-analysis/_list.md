@@ -12,5 +12,5 @@ List API analyzer configurations.
 
 - List all API Analysis rule configs for the service
     ```bash
-        apic api-analysis list -g contoso-resources -s contoso
+        apic api-analysis list -g contoso-resources -n contoso
     ```

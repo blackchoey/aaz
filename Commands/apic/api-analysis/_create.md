@@ -12,5 +12,5 @@ Create new or updates existing API analyzer configuration.
 
 - Create an API Analysis rule config
     ```bash
-        apic api-analysis create -g contoso-resources -s contoso -n spectral-openapi
+        apic api-analysis create -g contoso-resources -n contoso -c spectral-openapi
     ```

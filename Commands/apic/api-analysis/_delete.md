@@ -12,5 +12,5 @@ Delete deletes API analyzer configuration.
 
 - Delete an API Analysis rule config
     ```bash
-        apic api-analysis delete -g contoso-resources -s contoso -n spectral-openapi
+        apic api-analysis delete -g contoso-resources -n contoso -c spectral-openapi
     ```
